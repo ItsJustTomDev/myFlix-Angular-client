@@ -9,8 +9,6 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const apiUrl = 'https://marinanadj-53303.herokuapp.com/';
-const token = localStorage.getItem('token');
-const username = localStorage.getItem('user');
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +16,10 @@ const username = localStorage.getItem('user');
 /* It's a service class that makes a POST request to the server to register a new user */
 export class FetchApiDataService {
   // Inject HttpClient module to constructor params
+
+  token = localStorage.getItem('token');
+  username = localStorage.getItem('user');
+
   constructor(private http: HttpClient) {}
 
   /**
@@ -51,7 +53,7 @@ export class FetchApiDataService {
     return this.http
       .get(apiUrl + 'movies', {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -66,7 +68,7 @@ export class FetchApiDataService {
     return this.http
       .get(apiUrl + `movies/${title}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -81,7 +83,7 @@ export class FetchApiDataService {
     return this.http
       .get(apiUrl + `movies/director/${name}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -96,7 +98,7 @@ export class FetchApiDataService {
     return this.http
       .get(apiUrl + `movies/genre/${name}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -108,9 +110,9 @@ export class FetchApiDataService {
    */
   getUser(): Observable<any> {
     return this.http
-      .get(apiUrl + `users/${username}`, {
+      .get(apiUrl + `users/${this.username}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -122,9 +124,9 @@ export class FetchApiDataService {
    */
   getFavoriteMovies(): Observable<any> {
     return this.http
-      .get(apiUrl + `users/${username}/movies`, {
+      .get(apiUrl + `users/${this.username}/movies`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -137,9 +139,9 @@ export class FetchApiDataService {
    */
   addFavoriteMovie(movieID: any): Observable<any> {
     return this.http
-      .post(apiUrl + `users/${username}/movies/${movieID}`, {
+      .post(apiUrl + `users/${this.username}/movies/${movieID}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -152,9 +154,9 @@ export class FetchApiDataService {
    */
   removeFavoriteMovie(movieID: any): Observable<any> {
     return this.http
-      .delete(apiUrl + `users/${username}/movies/${movieID}`, {
+      .delete(apiUrl + `users/${this.username}/movies/${movieID}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -167,10 +169,10 @@ export class FetchApiDataService {
    */
   editUser(updateDetails: any): Observable<any> {
     return this.http
-      .put(apiUrl + `users/${username}`, {
+      .put(apiUrl + `users/${this.username}`, {
         updateDetails,
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
@@ -182,9 +184,9 @@ export class FetchApiDataService {
    */
   deleteUser(): Observable<any> {
     return this.http
-      .delete(apiUrl + `users/${username}`, {
+      .delete(apiUrl + `users/${this.username}`, {
         headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + this.token,
         }),
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
