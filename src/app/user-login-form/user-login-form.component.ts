@@ -21,6 +21,12 @@ export class UserLoginFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * The loginUser() function is called when the user clicks the login button. It calls the userLogin()
+   * function in the fetchApiData service, which sends a POST request to the server with the user's login
+   * credentials. If the login is successful, the user is redirected to the movies page. If the login is
+   * unsuccessful, an error message is displayed
+   */
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe(
       (result) => {

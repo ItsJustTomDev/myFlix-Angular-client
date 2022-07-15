@@ -11,6 +11,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /* This is the navigation bar. It is a component that is used in the app.component.html file. It is
+used to navigate to different pages. */
   goToMovies(): void {
     this.router.navigate(['movies']);
   }
